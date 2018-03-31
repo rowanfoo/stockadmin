@@ -58,7 +58,7 @@ LoadingCache<String, LocalDate> cache = CacheBuilder.newBuilder()
 
         Query query = entityManager.createNativeQuery(mysql);
         query.setParameter(1, code);
-        query.setParameter(1, code);
+        query.setParameter(2, code);
 
         return query.getResultList();
     }
@@ -69,7 +69,7 @@ LoadingCache<String, LocalDate> cache = CacheBuilder.newBuilder()
     @Override
     public List<Object[]>  consequitveDayFallStr(String date){
         String mysql = "SELECT code, max(close) as mymax, min(close), count(*) count " +
-                " FROM fortune.data where date >=? and changePercent<0 group by code  having count >=6";
+                " FROM core_data where date >=? and changePercent<0 group by code  having count >=6";
         Query query = entityManager.createNativeQuery(mysql);
 
         query.setParameter(1, date);
@@ -223,10 +223,10 @@ LoadingCache<String, LocalDate> cache = CacheBuilder.newBuilder()
     private LocalDate getCurrDate(){
         String mysql = "select date from core_data order by date desc limit 1  ";
         Query query = entityManager.createNativeQuery(mysql);
-        System.out.println("-------------> call getCurrDate ");
+        //System.out.println("-------------> call getCurrDate ");
         List<Object[]> coreData = query.getResultList();
         Object date = coreData.get(0) ;
-
+     //   System.out.println("-------------> call getCurrDate " + ((java.sql.Date)date ).toLocalDate());
         return ((java.sql.Date)date ).toLocalDate();
 
     }

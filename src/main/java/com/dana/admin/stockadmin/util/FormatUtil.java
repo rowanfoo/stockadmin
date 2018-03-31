@@ -24,7 +24,7 @@ public  class FormatUtil {
 
 
     public static double roundDouble(double value){
-        System.out.println("roundDouble :    "+value);
+    //    System.out.println("roundDouble :    "+value);
 //		DecimalFormat format = new DecimalFormat("0.00");
 //		return Double.parseDouble(format.format(value));
         //return   (Math.round(value * 100.0) / 100.0);
@@ -32,7 +32,7 @@ public  class FormatUtil {
         BigDecimal bd = new BigDecimal(Double.toString(value));
         bd = bd.setScale(2, RoundingMode.HALF_UP);
 
-        System.out.println("roundDouble :   done ");
+        //System.out.println("roundDouble :   done ");
         return bd.doubleValue();
 
     }

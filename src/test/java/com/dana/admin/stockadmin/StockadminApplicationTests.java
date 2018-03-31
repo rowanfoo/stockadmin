@@ -56,6 +56,7 @@ public class StockadminApplicationTests {
 	@Autowired
 	AsxMetaStockImport asximport;
 
+
 	LoadingCache<String, LocalDate> cache = CacheBuilder.newBuilder()
 			.expireAfterAccess(4, TimeUnit.HOURS)
 			.build(new CacheLoader<String, LocalDate>() {
@@ -226,7 +227,7 @@ public class StockadminApplicationTests {
 		coreDataToday.setFourhundred( fourhundred);
 		coreDataToday.setFourhundredchg ((close-fourhundred)/fourhundred   );
 
-		coreDataToday.setAvg3mth((Double)datarepo.findAverageVolume(code,date60.toString() ).get(0)  );
+		coreDataToday.setAvg3mth(datarepo.findAverageVolume(code,date60.toString() ).get(0) .longValue() );
 
 
 		datarepo.save(coreDataToday);
@@ -640,11 +641,59 @@ public class StockadminApplicationTests {
 		return (LocalDate)obj ;
 
 	}
+	@Test
+	public void breakRoundNumber() {
+		System.out.println ("breakRoundNumber ---------------> ");
+
+
+			List<Object[]> coreData = datarepo.breakRoundNumber("BHP.AX");
+
+			for (Object[] result : coreData) {
+				// System.out.println ("breakRoundNumber ---------------> "+result[0] + " " + result[1] + " - " + result[2]);
+
+				TechTechstr str = new TechTechstr("BHP.AX" , LocalDate.now(), 23);
+				//str.setClose(Double.parseDouble( result[2]+""));
+				//str.setOpen(Double.parseDouble( result[3]+""));
+				str.setClose((Double) result[0]);
+				str.setOpen((Double)result[1]);
+
+			//	techStrRepo.save(str);
+				System.out.println ("breakRoundNumber ---------------> "+str);
+
+			}
+
+	}
+	@Test
+	public void downGreater40Percent(){
+		System.out.println ("downGreater40Percent ---------------> ");
+
+
+			List<Object[]> coreData = datarepo.downGreater40Percent("BHP.AX");
+
+			for (Object[] result : coreData) {
+
+				TechTechstr str = new TechTechstr("BHP.AX" , LocalDate.now(), 28);
+				double min = Double.parseDouble( result[0]+"");
+				double max = Double.parseDouble( result[1]+"");
+				double no = (max-min)/max;
+				System.out.println ("downGreater40Percent ---------------> no: " + no);
+				if(no>0.3){
+					str.setNotes( "fall from "+max+" to "+min +" % fall "+Math.round(no*100)  );
+					techStrRepo.save(str);
+
+				}
+			}
+
+	}
 
 
 	@Test
 	public void  importdata(){
-		asximport.importAllData();
+		//asximport.importAllData();
+		//asximport.calc();
+		asximport.algo();
+		//Double twenty =(Double)datarepo.findAveragePrice("BHP.AX",LocalDate.now().toString() ).get(0);
+
 
 	}
 

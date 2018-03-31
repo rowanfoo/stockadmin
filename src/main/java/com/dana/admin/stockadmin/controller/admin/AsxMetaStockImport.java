@@ -85,6 +85,28 @@ public class AsxMetaStockImport {
 
     }
 
+    @RequestMapping(value = "/calc", method = RequestMethod.GET)
+    public void calc( ) {
+        System.out.println("----------------------------WEB TRIGGER RUN  CALC" );
+        System.out.println("----RUN  CALC data AVERAGE --:");
+        calcAverage.run();
+        System.out.println("----RUN  AVERAGE DONE   --:");
+        calcRSI.run();
+        System.out.println("----RUN RSI DONE--:");
+
+
+    }
+
+    @RequestMapping(value = "/algo", method = RequestMethod.GET)
+    public void algo( ) {
+        System.out.println("----------------------------WEB TRIGGER RUN  ALGO" );
+        System.out.println("----RUN  ALGO --:");
+        algo.executeAll();
+        System.out.println("----RUN  ALGO DONE   --:");
+
+
+
+    }
 
 private  void   insertdata(String code)throws Exception{
     final String uri = "https://www.asx.com.au/asx/1/share/"+code;
@@ -102,14 +124,13 @@ private  void   insertdata(String code)throws Exception{
 
     @Scheduled(cron = "0 15 16 ? * MON-FRI")
     public void  importAllData() {
-
+        System.out.println("----ASX import RUN !!!!!  --:");
         //allasxcodes.forEach((a)-> System.out.println("----codes--:"+a));
         allasxcodes.stream()
                 .forEach((a)->{
                     try {
-                        TimeUnit.MINUTES.sleep(1);
-//                        TimeUnit.SECONDS.sleep(3);
-
+                          TimeUnit.SECONDS.sleep(3);
+                        //System.out.println("----ASX import data  --:"+a);
                         insertdata(a);
                     } catch (Exception e) {
                         System.out.println("----ASX import data  --:"+e);
@@ -121,6 +142,7 @@ private  void   insertdata(String code)throws Exception{
         datarepo.flush();
         System.out.println("----RUN  CALC data  --:");
         calcAverage.run();
+        System.out.println("----RUN  AVERAGE DONE   --:");
         calcRSI.run();
         System.out.println("----RUN ALGO --:");
 

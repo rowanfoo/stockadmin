@@ -15,7 +15,7 @@ import java.time.LocalDate;
 
 public class TechTechstr {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String code;
   private LocalDate date;

@@ -36,7 +36,7 @@ public class CoreData {
   private Double changepercent;
   @JsonProperty("previous_close_price")
   private String previousclose;
-  private Double avg3mth;
+  private Long avg3mth;
   private Double fifty;
   private Double fiftychg;
   private Double twenty;

@@ -68,17 +68,34 @@ public class AlgoAdminDaily {
 
 
     public void executeAll() {
-        Method[] allMethods = this.getClass().getDeclaredMethods();
-        for (Method m : allMethods) {
-            try {
-                System.out.println("----AlgoAdminDaily --- executeAll :"+m.getName()  );
-                m.invoke(this);
-            } catch (Exception e) {
-                System.out.println("!!!!!!!!!!!!!!!!!!ERROE----AlgoAdminDaily --- executeAll ------ "+e);
-            }
-        }
+//        Method[] allMethods = this.getClass().getDeclaredMethods();
+//        Object[] parameters = { null };
+//        for (Method m : allMethods) {
+//
+//            try {
+//                System.out.println("----AlgoAdminDaily --- executeAll :"+m.getName()  );
+//                m.invoke(this,parameters);
+//            } catch (Exception e) {
+//                System.out.println("!!!!!!!!!!!!!!!!!!ERROE----AlgoAdminDaily --- executeAll ------ "+e);
+//            }
+//        }
+
+       // breakRoundNumber();
+        consequitveDayFallStr();
+        downGreater40Percent();
+        fiftyDayDistance();
+       // fiftyDayless(0.2);
+        fallWithLowVolumeStrReplace();
+        movingAveragetwoHundred();
+        queryDsltwoHundredCrossFourHundred(0.01,0.05);
+        queryDslLowRSI();
+        queryDslfiftyDayless(0.2);
+        down4PercenteEst();
+        greaterVolAvg(5);
+
     }
 
+//// TODO: 3/26/2018  cant get to work
 
     public void breakRoundNumber(){
         System.out.println ("breakRoundNumber ---------------> ");
@@ -90,8 +107,11 @@ public class AlgoAdminDaily {
            // System.out.println ("breakRoundNumber ---------------> "+result[0] + " " + result[1] + " - " + result[2]);
 
             TechTechstr str = new TechTechstr((String)result[0] , ((java.sql.Date)result[1]).toLocalDate(), 23);
-            str.setClose(Double.parseDouble( result[3]+""));
-            str.setOpen(Double.parseDouble( result[4]+""));
+            //str.setClose(Double.parseDouble( result[2]+""));
+            //str.setOpen(Double.parseDouble( result[3]+""));
+            str.setClose((Double) result[2]);
+            str.setOpen((Double)result[3]);
+
             techStrRepo.save(str);
             System.out.println ("breakRoundNumber ---------------> "+str);
 
@@ -109,14 +129,18 @@ public class AlgoAdminDaily {
 
             for (Object[] result : coreData) {
 
-                TechTechstr str = new TechTechstr((String)result[0] , ((java.sql.Date)result[1]).toLocalDate(), 28);
-                double min = Double.parseDouble( result[2]+"");
-                double max = Double.parseDouble( result[3]+"");
+                TechTechstr str = new TechTechstr(a+".AX" ,  getLatestDate(), 28);
+              //  System.out.println ("downGreater40Percent --------------code -> " + a);
+             //   System.out.println ("downGreater40Percent --------------->res1 " + result[0]);
+               // System.out.println ("downGreater40Percent --------------->res2 "+result[1]);
+                if (result[0]==null) continue ;
+                double min = Double.parseDouble( result[0]+"");
+                double max = Double.parseDouble( result[1]+"");
                 double no = (max-min)/max;
 
                 if(no>0.3){
                     str.setNotes( "fall from "+max+" to "+min +" % fall "+Math.round(no*100)  );
-                    techStrRepo.save(str);
+                   techStrRepo.save(str);
 
                 }
             }
@@ -133,8 +157,9 @@ public class AlgoAdminDaily {
         List<Object[]> coreData = datarepo.consequitveDayFallStr(mydate.toString());
 
         for (Object[] result : coreData) {
+      //      System.out.println ("consequitveDayFallStr ---------- code-----> :" + result[0]);
 
-            TechTechstr str = new TechTechstr((String)result[0] , mydate, 6);
+            TechTechstr str = new TechTechstr((String)result[0] , getCacheDate(), 6);
             str.setFifty( Double.parseDouble( result[1]+""));
             str.setClose(Double.parseDouble( result[2]+""));
             str.setClose( Double.parseDouble( result[3]+""));
@@ -156,7 +181,7 @@ public class AlgoAdminDaily {
             str.setClose(Double.parseDouble( result[1]+""));
             str.setTwohundredchg(Double.parseDouble( result[2]+""));
 
-            //     techStrRepo.save(str);
+                 techStrRepo.save(str);
             System.out.println ("movingAverageonehundredfifty ---------------> "+str);
 
         }
@@ -170,7 +195,7 @@ public class AlgoAdminDaily {
             str.setClose(Double.parseDouble( result[1]+""));
             str.setTwohundredchg(Double.parseDouble( result[2]+""));
 
-            //     techStrRepo.save(str);
+                techStrRepo.save(str);
             System.out.println ("movingAveragetwenty---------------> "+str);
 
         }
@@ -190,7 +215,7 @@ public class AlgoAdminDaily {
             str.setFifty(Double.parseDouble( result[3]+"") );
             str.setFiftychg(Double.parseDouble( result[4]+""));
 
-            //     techStrRepo.save(str);
+                 techStrRepo.save(str);
             System.out.println ("fiftyDayDistance ---------------> "+str);
 
         }
@@ -233,23 +258,7 @@ public class AlgoAdminDaily {
 
     }
 
-     //less than 50d AVG
-    public void  queryDslfiftyDayless(double  fiftydayaverage ){
-        System.out.println("---------queryDslfiftyDayless-------->  " );
-        Iterable<CoreData>  data  = datarepo.findAll(
-                QCoreData.coreData.fiftychg.lt(fiftydayaverage)
-                        .and (QCoreData.coreData.date.eq (getLatestDate()))
-        );
 
-        data.forEach((a)->{
-            TechTechstr str = new TechTechstr(a.getCode() , a.getDate(), 25);
-            str.setClose(a.getClose());
-            str.setFifty(a.getFifty() );
-            str.setFiftychg(FormatUtil.roundDouble(a.getFiftychg() ));
-            techStrRepo.save(str);
-        } );
-
-    }
 
     //fall with low vol
     public void  fallWithLowVolumeStrReplace() {
@@ -307,21 +316,38 @@ public class AlgoAdminDaily {
        });
 
     }
-    public  void fiftyDayless(double fiftydaylesspercent){
-        System.out.println("---------fiftyDayless%more-------->  " );
+//    public  void fiftyDayless(double fiftydaylesspercent){
+//        System.out.println("---------fiftyDayless%more-------->  " );
+//        Iterable<CoreData>  data  = datarepo.findAll(
+//                (QCoreData.coreData.fiftychg.lt(fiftydaylesspercent)    )
+//                        .and (QCoreData.coreData.date.eq (getCacheDate()))) ;
+//        data.forEach((a)->{
+//            TechTechstr str = new TechTechstr(a.getCode() , a.getDate(), 1);
+//            str.setClose(a.getClose());
+//            str.setFifty(a.getFifty());
+//            str.setFiftychg(FormatUtil.roundDouble(a.getFiftychg()));
+//            techStrRepo.save(str);
+//
+//        });
+//        System.out.println("---------fiftyDayless%more- DONE------->  " );
+//    }
+    //less than 50d AVG
+    public void  queryDslfiftyDayless(double  fiftydayaverage ){
+        System.out.println("---------queryDslfiftyDayless-------->  " );
         Iterable<CoreData>  data  = datarepo.findAll(
-                (QCoreData.coreData.fiftychg.lt(fiftydaylesspercent)    )
-                        .and (QCoreData.coreData.date.eq (getCacheDate()))) ;
+                QCoreData.coreData.fiftychg.lt(fiftydayaverage)
+                        .and (QCoreData.coreData.date.eq (getLatestDate()))
+        );
+
         data.forEach((a)->{
             TechTechstr str = new TechTechstr(a.getCode() , a.getDate(), 1);
             str.setClose(a.getClose());
-            str.setFifty(a.getFifty());
-            str.setFiftychg(FormatUtil.roundDouble(a.getFiftychg()));
+            str.setFifty(a.getFifty() );
+            str.setFiftychg(FormatUtil.roundDouble(a.getFiftychg() ));
             techStrRepo.save(str);
-
-        });
+        } );
+        System.out.println("---------queryDslfiftyDayless- DONE------->  " );
     }
-
 
 
     private LocalDate getCacheDate(){

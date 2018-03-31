@@ -36,7 +36,6 @@ public class CalcAverage extends BaseAdmin {
             Double onehundredfifty =(Double)datarepo.findAveragePrice(mycode,date150.toString() ).get(0);
             Double twohundred =(Double)datarepo.findAveragePrice(mycode,date200.toString() ).get(0);
             Double fourhundred =(Double)datarepo.findAveragePrice(mycode,date400.toString() ).get(0);
-
             coreDataToday.setTwenty( twenty);
             coreDataToday.setTwentychg((close-twenty)/twenty   );
 
@@ -58,8 +57,7 @@ public class CalcAverage extends BaseAdmin {
 
             coreDataToday.setFourhundred( fourhundred);
             coreDataToday.setFourhundredchg ((close-fourhundred)/fourhundred   );
-
-            coreDataToday.setAvg3mth((Double)datarepo.findAverageVolume(mycode,date60.toString() ).get(0)  );
+            coreDataToday.setAvg3mth(datarepo.findAverageVolume(mycode,date60.toString() ).get(0).longValue()  );
 
             datarepo.save(coreDataToday);
 

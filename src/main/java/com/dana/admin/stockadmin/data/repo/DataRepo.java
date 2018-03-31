@@ -7,6 +7,8 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.List;
 @Repository
@@ -23,13 +25,13 @@ public interface DataRepo extends JpaRepository<CoreData,Long> ,IDataAlgo , Quer
         List<CoreData> findTop2ByCodeOrderByDateDesc(String code);
         List<CoreData> findTop1ByOrderByDateDesc();
 
-    @Query(value = "SELECT  Avg(close)as data   FROM fortune.data where date >= :date and code=:code ",
+    @Query(value = "SELECT  Avg(close)as data   FROM core_data where date >= :date and code=:code ",
             nativeQuery = true )
     List<Double> findAveragePrice(@Param("code") String code,@Param("date") String date);
 
-    @Query(value = "SELECT  Avg(volume)as data   FROM fortune.data where date >= :date and code=:code ",
+    @Query(value = "SELECT  Avg(volume)as data   FROM core_data where date >= :date and code=:code ",
             nativeQuery = true )
-    List<Double> findAverageVolume(@Param("code") String code,@Param("date") String date);
+    List<BigDecimal> findAverageVolume(@Param("code") String code, @Param("date") String date);
 
 
 
