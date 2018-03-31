@@ -24,7 +24,7 @@ import java.util.Scanner;
 
 @SpringBootApplication
 @EntityScan(
-        basePackageClasses = {StockadminApplication.class, Jsr310JpaConverters.class}
+        basePackageClasses = {StockadminApplication2.class, Jsr310JpaConverters.class}
 )
 @EnableScheduling
 public class StockadminApplication2 extends SpringBootServletInitializer implements CommandLineRunner {
