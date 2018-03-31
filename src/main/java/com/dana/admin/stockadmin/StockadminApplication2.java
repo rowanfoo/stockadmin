@@ -46,7 +46,7 @@ public class StockadminApplication2 extends SpringBootServletInitializer impleme
             //System.out.println("-------------------------asx file path-->"+asxpath);
 
 
-            InputStream stream = StockadminApplication.class.getResourceAsStream("ASXCodes.txt");
+            InputStream stream = StockadminApplication2.class.getResourceAsStream("ASXCodes.txt");
 
 //			Scanner scanner = new Scanner(new File(  asxpath ));
 
