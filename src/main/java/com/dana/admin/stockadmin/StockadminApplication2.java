@@ -138,7 +138,7 @@ public class StockadminApplication2 extends SpringBootServletInitializer impleme
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder app){
 
-        return app.sources(StockadminApplication.class);
+        return app.sources(StockadminApplication2.class);
     }
 
     @Override
@@ -181,6 +181,6 @@ public class StockadminApplication2 extends SpringBootServletInitializer impleme
 
     public static void main(String[] args) {
 
-        SpringApplication.run(StockadminApplication.class, args);
+        SpringApplication.run(StockadminApplication2.class, args);
     }
 }
