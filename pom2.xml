@@ -128,7 +128,7 @@
 		</plugins>
 		<resources>
 			<resource>
-				<directory>${basedir}/target</directory>
+				<directory>${basedir}/target/*war</directory>
 				<targetPath>E:/apache-tomcat-8.5.29/webapps</targetPath>
 				<filtering>false</filtering>
 			</resource>
