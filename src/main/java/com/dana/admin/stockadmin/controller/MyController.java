@@ -1,6 +1,7 @@
 package com.dana.admin.stockadmin.controller;
 
 import com.dana.admin.stockadmin.data.entity.CoreData;
+import com.dana.admin.stockadmin.data.entity.QCoreData;
 import com.dana.admin.stockadmin.data.repo.DataRepo;
 import com.dana.admin.stockadmin.service.admin.CalcAverage;
 import com.dana.admin.stockadmin.service.admin.CalcChangePercent;
@@ -40,14 +41,29 @@ public class MyController {
     CalcAverage calcAverage;
     @Autowired
     CalcRSI calcRSI;
+    @Autowired
+    DataRepo datarepo;
 
+
+//    @GetMapping("/")
+//    public String index() {
+//        System.out.println("-------> get root file ");
+//        return "upload";
+//    }
 
 
     @GetMapping("/")
-    public String index() {
+    public String index(ModelMap mode ) {
         System.out.println("-------> get root file ");
+        Long count  =  datarepo.count(QCoreData.coreData.date.eq(LocalDate.now()));
+        mode.put("count", count );
+        Long countrsi  =  datarepo.count(QCoreData.coreData.date.eq(LocalDate.now()).
+                and(QCoreData.coreData.rsi.eq(0.0).or(QCoreData.coreData.rsi.eq(100.00)))
+        );
+        mode.put("countrsi", countrsi );
         return "upload";
     }
+
 
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
     public String submit(@RequestParam("file") MultipartFile file, ModelMap modelMap) {

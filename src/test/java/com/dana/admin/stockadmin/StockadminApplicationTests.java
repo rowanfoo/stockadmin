@@ -697,4 +697,22 @@ public class StockadminApplicationTests {
 
 	}
 
+	@Test
+	public void  testdata(){
+		NumberPath<Double> fourhundred = QCoreData.coreData.fourhundred;
+		NumberPath<Double> twohundred = QCoreData.coreData.twohundred;
+
+
+	//	Iterable<CoreData>  data  = datarepo.findAll(QCoreData.coreData.date.eq(LocalDate.now())		);
+		Long count  =  datarepo.count(QCoreData.coreData.date.eq(LocalDate.now()));
+		System.out.println("---------COUNT--------------"+count);
+
+		Long countrsi  =  datarepo.count(QCoreData.coreData.date.eq(LocalDate.now()).
+				and(QCoreData.coreData.rsi.eq(0.0).or(QCoreData.coreData.rsi.eq(100.00)))
+		);
+		System.out.println("---------countrsi--------------"+countrsi);
+
+	}
+
+
 }

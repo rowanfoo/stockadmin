@@ -14,5 +14,18 @@
 <form:form method="POST" action="http://localhost:8080/run" enctype="multipart/form-data">
     <input type="submit" value="RUN" />
 </form:form>
+<h2>Number of record today :${count}</h2>
+<br>
+<h2>Number rsi errors :${countrsi}</h2>
+
+<a href="/run">Run all import </a>
+<br>
+
+<a href="/calc">Calc all data  </a>
+<br>
+
+<a href="/algo">Run Algo </a>
+
 </body>
-</html> 123
+
+</html>

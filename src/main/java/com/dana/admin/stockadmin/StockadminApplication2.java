@@ -23,11 +23,10 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-/*
-public class StockadminApplication2{
 
-}
-*/
+//public class StockadminApplication2{
+//}
+
 @SpringBootApplication
 @EntityScan(
         basePackageClasses = {StockadminApplication2.class, Jsr310JpaConverters.class}
@@ -191,3 +190,4 @@ public class StockadminApplication2 extends SpringBootServletInitializer impleme
         SpringApplication.run(StockadminApplication2.class, args);
     }
 }
+
