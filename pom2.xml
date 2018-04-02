@@ -128,9 +128,11 @@
 		</plugins>
 		<resources>
 			<resource>
-				<directory>${basedir}/target/*war</directory>
+				<directory>${basedir}/target</directory>
 				<targetPath>E:/apache-tomcat-8.5.29/webapps</targetPath>
-				<filtering>false</filtering>
+				<includes>
+                           		 <include>*.war</include>
+                        	</includes>
 			</resource>
 		</resources>
 	</build>
