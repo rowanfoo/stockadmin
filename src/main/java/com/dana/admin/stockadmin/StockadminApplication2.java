@@ -12,6 +12,7 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
@@ -22,6 +23,11 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/*
+public class StockadminApplication2{
+
+}
+*/
 @SpringBootApplication
 @EntityScan(
         basePackageClasses = {StockadminApplication2.class, Jsr310JpaConverters.class}
@@ -45,12 +51,13 @@ public class StockadminApplication2 extends SpringBootServletInitializer impleme
 //			H:\GIT\ASXCodes.txt
             //System.out.println("-------------------------asx file path-->"+asxpath);
 
-
-            InputStream stream = StockadminApplication2.class.getResourceAsStream("ASXCodes.txt");
-
 //			Scanner scanner = new Scanner(new File(  asxpath ));
 
-            Scanner scanner = new Scanner( stream );
+            File file = new ClassPathResource("ASXCodes.txt").getFile();
+
+            Scanner scanner = new Scanner( file );
+
+
             System.out.println("scannner ok --->");
             scanner.useDelimiter(",");
             //System.out.println("scannner ok1 --->");

@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
@@ -44,11 +45,15 @@ public class StockadminApplication  implements CommandLineRunner {
 			//System.out.println("-------------------------asx file path-->"+asxpath);
 
 
-			InputStream stream = StockadminApplication.class.getResourceAsStream("ASXCodes.txt");
-
+//			InputStream stream = StockadminApplication.class.getResourceAsStream("ASXCodes.txt");
+			File file = new ClassPathResource("ASXCodes.txt").getFile();
 //			Scanner scanner = new Scanner(new File(  asxpath ));
 
-			Scanner scanner = new Scanner( stream );
+//			Scanner scanner = new Scanner( stream );
+			Scanner scanner = new Scanner( file );
+
+
+
 			System.out.println("scannner ok --->");
 			scanner.useDelimiter(",");
 			//System.out.println("scannner ok1 --->");
