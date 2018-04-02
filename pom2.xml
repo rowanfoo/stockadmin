@@ -126,6 +126,13 @@
 
 
 		</plugins>
+		<resources>
+			<resource>
+				<directory>${basedir}/target</directory>
+				<targetPath>E:/apache-tomcat-8.5.29/webapps</targetPath>
+				<filtering>false</filtering>
+			</resource>
+		</resources>
 	</build>
 
 
