@@ -122,14 +122,14 @@ private  void   insertdata(String code)throws Exception{
 
 }
 
-    @Scheduled(cron = "0 15 16 ? * MON-FRI")
+    @Scheduled(cron = "0 21 05 ? * MON-FRI")
     public void  importAllData() {
         System.out.println("----ASX import RUN !!!!!  --:");
         //allasxcodes.forEach((a)-> System.out.println("----codes--:"+a));
         allasxcodes.stream()
                 .forEach((a)->{
                     try {
-                          TimeUnit.SECONDS.sleep(3);
+                          TimeUnit.SECONDS.sleep(20);
                         //System.out.println("----ASX import data  --:"+a);
                         insertdata(a);
                     } catch (Exception e) {
