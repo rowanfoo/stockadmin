@@ -122,7 +122,7 @@ private  void   insertdata(String code)throws Exception{
 
 }
 
-    @Scheduled(cron = "0 21 05 ? * MON-FRI")
+    @Scheduled(cron = "0 21 33 ? * MON-FRI")
     public void  importAllData() {
         System.out.println("----ASX import RUN !!!!!  --:");
         //allasxcodes.forEach((a)-> System.out.println("----codes--:"+a));
