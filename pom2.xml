@@ -121,18 +121,28 @@
 							<processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>
 						</configuration>
 					</execution>
+                    <execution>
+                        <phase>package</phase>
+                        <configuration>
+                            <target>
+                                <copy file="target/${artifactId}.war" tofile="E:/apache-tomcat-8.5.29/webapps/${artifactId}.war"/>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+
+
+
+
+
 				</executions>
 			</plugin>
 
 
 		</plugins>
-		<resources>
-			<resource>
-				<directory>${basedir}/target</directory>
-				<targetPath>E:/apache-tomcat-8.5.29/webapps</targetPath>
-				<filtering>false</filtering>
-			</resource>
-		</resources>
+
 	</build>
 
 
