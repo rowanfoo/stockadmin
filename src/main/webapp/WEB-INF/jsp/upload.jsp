@@ -18,6 +18,14 @@
 <br>
 <h2>Number rsi errors :${countrsi}</h2>
 
+<h3>Import :${importstatus}</h3>
+<h3>Average :${averagestatus}</h3>
+<h3>RSI: ${rsistatus}</h3>
+<h3>Algo :${algostatus}</h3>
+
+
+
+
 <a href="/run">Run all import </a>
 <br>
 
