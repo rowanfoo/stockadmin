@@ -1,43 +1,44 @@
 package com.dana.admin.stockadmin;
 
+//public class StockadminApplication2{}
+
+
+
+//public class StockadminApplication2{
+//
+//}
+
 import com.dana.admin.stockadmin.data.repo.DataRepo;
-import org.aspectj.weaver.ast.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.ServletRegistrationBean;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.support.ErrorPageFilter;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.io.File;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-
-//public class StockadminApplication2{
-//}
 
 @SpringBootApplication
 @EntityScan(
         basePackageClasses = {StockadminApplication2.class, Jsr310JpaConverters.class}
 )
 @EnableScheduling
+
 public class StockadminApplication2 extends SpringBootServletInitializer implements CommandLineRunner {
     //@Value( "${asx.pathfile}" )
 ///	private String asxpath;
 
-    @Autowired
-    private ApplicationContext context;
+    //@Autowired
+   // private ApplicationContext context;
     @Autowired
     DataRepo datarepo;
 
@@ -147,6 +148,19 @@ public class StockadminApplication2 extends SpringBootServletInitializer impleme
         return app.sources(StockadminApplication2.class);
     }
 
+    @Bean
+    public ErrorPageFilter errorPageFilter() {
+        return new ErrorPageFilter();
+    }
+
+    @Bean
+    public FilterRegistrationBean disableSpringBootErrorFilter(ErrorPageFilter filter) {
+        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+        filterRegistrationBean.setFilter(filter);
+        filterRegistrationBean.setEnabled(false);
+        return filterRegistrationBean;
+    }
+
     @Override
     public void run(String... args) throws Exception {
 
@@ -190,4 +204,5 @@ public class StockadminApplication2 extends SpringBootServletInitializer impleme
         SpringApplication.run(StockadminApplication2.class, args);
     }
 }
+
 
