@@ -2,27 +2,19 @@ package com.dana.admin.stockadmin.controller.admin;
 
 import com.dana.admin.stockadmin.data.entity.CoreData;
 import com.dana.admin.stockadmin.data.repo.DataRepo;
+import com.dana.admin.stockadmin.dto.RunningStatus;
 import com.dana.admin.stockadmin.service.Algo.AlgoAdminDaily;
 import com.dana.admin.stockadmin.service.admin.CalcAverage;
 import com.dana.admin.stockadmin.service.admin.CalcRSI;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -40,6 +32,8 @@ public class AsxMetaStockImport {
     CalcAverage calcAverage;
     @Autowired
     CalcRSI calcRSI;
+    @Autowired
+    RunningStatus runningStatus;
     /*
     // save uploaded file to this folder
     private static String UPLOADED_FOLDER = "E://temp//";
@@ -122,10 +116,20 @@ private  void   insertdata(String code)throws Exception{
 
 }
 
-    @Scheduled(cron = "0 30 15 ? * MON-FRI")
+    @Scheduled(cron = "0 15 15 ? * MON-FRI")
+
+
     public void  importAllData() {
+
+
+
+        runningStatus.setImportstatus("");
+       runningStatus.setRsistatus("");
+        runningStatus.setAlgostatus("");
+
         System.out.println("----ASX import RUN !!!!!  --:");
         //allasxcodes.forEach((a)-> System.out.println("----codes--:"+a));
+        runningStatus.setImportstatus("running");
         allasxcodes.stream()
                 .forEach((a)->{
                     try {
@@ -140,14 +144,23 @@ private  void   insertdata(String code)throws Exception{
         System.out.println("----ASX import data   ALL DONE --:");
         System.out.println("----ASX import data   BYE--:");
         datarepo.flush();
+
+        runningStatus.setImportstatus("completed");
         System.out.println("----RUN  CALC data  --:");
+
+        runningStatus.setAveragestatus("running");
         calcAverage.run();
+        runningStatus.setAveragestatus("completed");
+
+
         System.out.println("----RUN  AVERAGE DONE   --:");
+        runningStatus.setRsistatus("running");
         calcRSI.run();
+        runningStatus.setRsistatus("completed");
         System.out.println("----RUN ALGO --:");
-
+        runningStatus.setAlgostatus("running");
         algo.executeAll();
-
+        runningStatus.setAlgostatus("completed");
 
     }
 
