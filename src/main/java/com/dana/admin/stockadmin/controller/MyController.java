@@ -3,6 +3,7 @@ package com.dana.admin.stockadmin.controller;
 import com.dana.admin.stockadmin.data.entity.CoreData;
 import com.dana.admin.stockadmin.data.entity.QCoreData;
 import com.dana.admin.stockadmin.data.repo.DataRepo;
+import com.dana.admin.stockadmin.dto.RunningStatus;
 import com.dana.admin.stockadmin.service.admin.CalcAverage;
 import com.dana.admin.stockadmin.service.admin.CalcChangePercent;
 import com.dana.admin.stockadmin.service.admin.CalcRSI;
@@ -44,7 +45,8 @@ public class MyController {
     @Autowired
     DataRepo datarepo;
 
-
+    @Autowired
+    RunningStatus runningStatus;
 //    @GetMapping("/")
 //    public String index() {
 //        System.out.println("-------> get root file ");
@@ -60,7 +62,12 @@ public class MyController {
         Long countrsi  =  datarepo.count(QCoreData.coreData.date.eq(LocalDate.now()).
                 and(QCoreData.coreData.rsi.eq(0.0).or(QCoreData.coreData.rsi.eq(100.00)))
         );
-        mode.put("countrsi", countrsi );
+        mode.put("importstatus", runningStatus.getImportstatus() );
+        mode.put("rsistatus", runningStatus. getRsistatus());
+        mode.put("averagestatus", runningStatus.getAveragestatus() );
+        mode.put("algostatus", runningStatus.getAlgostatus() );
+
+
         return "upload";
     }
 
