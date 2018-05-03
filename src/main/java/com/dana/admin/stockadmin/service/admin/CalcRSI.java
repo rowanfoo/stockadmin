@@ -8,31 +8,13 @@ import java.util.List;
 public class CalcRSI extends BaseAdmin {
     @Override
     public void run(){
-        System.out.println("---------------------->CalcRSI");
-//        for (String code :  allasxcodes) {
-//         //   System.out.println(" --------- findTopTwoToday -----");
-//            //List<CoreData> coreData = datarepo.findTop2ByCodeOrderByDateDesc("RIO.AX") ;
-//            List<CoreData> coreData = datarepo.findTop2ByCodeOrderByDateDesc(code+".AX") ;
-//
-////            System.out.println(" ********************  DONE findTopTwoToday -----" + coreData.size());
-//
-//            CoreData coreDataToday =coreData.get(0);
-//            CoreData coreDataYest =coreData.get(1);
-//            Double change  = coreDataToday.getClose() -  coreDataYest.getClose();
-//            coreDataToday.setChanges(change );
-//            coreDataToday.setChangepercent (change/ coreDataYest.getClose() );
-//            datarepo.save(coreDataToday);
-//
-//
-//
-//        }
+
         System.out.println(" --------- calcRSI START -----");
         int periodLength = 14;
         for (String code :  allasxcodes) {
 
 
             List<CoreData> coreData = datarepo.findTop2ByCodeOrderByDateDesc(code+".AX") ;
- //           System.out.println(" ********************  DONE calcRSI -----" + coreData.size());
 
             CoreData coreDataToday =coreData.get(0);
             CoreData coreDataYest =coreData.get(1);
