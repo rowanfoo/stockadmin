@@ -2,7 +2,6 @@ package com.dana.admin.stockadmin.service.Algo;
 
 import com.dana.admin.stockadmin.data.entity.CoreData;
 import com.dana.admin.stockadmin.data.entity.QCoreData;
-import com.dana.admin.stockadmin.data.entity.QCoreStock;
 import com.dana.admin.stockadmin.data.entity.TechTechstr;
 import com.dana.admin.stockadmin.data.repo.DataRepo;
 import com.dana.admin.stockadmin.data.repo.StockRepo;
@@ -14,23 +13,15 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.querydsl.core.types.dsl.NumberPath;
-import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.math.BigInteger;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -53,6 +44,7 @@ public class AlgoAdminDaily {
     ArrayList<String > allasxcodes;
     @PersistenceContext
     private EntityManager entityManager;
+
 
 
     LoadingCache<String, LocalDate> cache = CacheBuilder.newBuilder()
@@ -157,7 +149,7 @@ public class AlgoAdminDaily {
         List<Object[]> coreData = datarepo.consequitveDayFallStr(mydate.toString());
 
         for (Object[] result : coreData) {
-      //      System.out.println ("consequitveDayFallStr ---------- code-----> :" + result[0]);
+           System.out.println ("consequitveDayFallStr ---------- code-----> :" + result[0]);
 
             TechTechstr str = new TechTechstr((String)result[0] , getCacheDate(), 6);
             str.setFifty( Double.parseDouble( result[1]+""));
@@ -250,7 +242,7 @@ public class AlgoAdminDaily {
         );
 
         data.forEach((a)->{
-            TechTechstr str = new TechTechstr(a.getCode() , a.getDate(), 25);
+            TechTechstr str = new TechTechstr(a.getCode() , a.getDate(), 24);
             str.setChangepercent(a.getRsi() );
             techStrRepo.save(str);
         } );
@@ -352,7 +344,7 @@ public class AlgoAdminDaily {
 
     private LocalDate getCacheDate(){
       try {
-            return cache.get("localdate");
+          return cache.get("localdate");
         } catch (Exception e) {
             System.out.println(" " + e);
         }
