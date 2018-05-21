@@ -33,7 +33,7 @@
 <br>
 
 <a href="/algo">Run Algo </a>
-
+<a href="news">Run Algo </a>
 </body>
 
 </html>
