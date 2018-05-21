@@ -3,6 +3,7 @@ package com.dana.admin.stockadmin.controller.admin;
 import com.dana.admin.stockadmin.data.entity.CoreData;
 import com.dana.admin.stockadmin.data.repo.DataRepo;
 import com.dana.admin.stockadmin.dto.RunningStatus;
+import com.dana.admin.stockadmin.scrap.asx.AsxNews;
 import com.dana.admin.stockadmin.service.Algo.AlgoAdminDaily;
 import com.dana.admin.stockadmin.service.admin.CalcAverage;
 import com.dana.admin.stockadmin.service.admin.CalcRSI;
@@ -34,6 +35,9 @@ public class AsxMetaStockImport {
     CalcRSI calcRSI;
     @Autowired
     RunningStatus runningStatus;
+    @Autowired
+    AsxNews asxNews;
+
     /*
     // save uploaded file to this folder
     private static String UPLOADED_FOLDER = "E://temp//";
@@ -70,6 +74,13 @@ public class AsxMetaStockImport {
     }
 
 */
+    @RequestMapping(value = "/news", method = RequestMethod.GET)
+    public void news( ) {
+        System.out.println("----------------------------WEB TRIGGER RUN");
+
+        asxNews.run();
+
+    }
 
     @RequestMapping(value = "/run", method = RequestMethod.GET)
     public void submit( ) {
@@ -161,6 +172,7 @@ private  void   insertdata(String code)throws Exception{
         runningStatus.setAlgostatus("running");
         algo.executeAll();
         runningStatus.setAlgostatus("completed");
+        asxNews.run();
 
     }
 
