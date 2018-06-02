@@ -22,7 +22,6 @@ public class CoreDataController {
     //@CrossOrigin(origins = "http://localhost:8090")
     @CrossOrigin
     public Iterable<CoreData> getDataFrom( @RequestParam String code,@RequestParam String date ){
-        logger.info("----------------getDataFrom :  code  : ",code );
         return coreDataService.getDataFrom(code,date );
     }
 
