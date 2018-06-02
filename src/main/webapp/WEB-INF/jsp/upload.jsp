@@ -26,13 +26,14 @@
 
 
 
-<a href="/run">Run all import </a>
+<a href="run">Run all import </a>
 <br>
 
-<a href="/calc">Calc all data  </a>
+<a href="calc">Calc all data  </a>
 <br>
 
-<a href="/algo">Run Algo </a>
+<a href="algo">Run Algo </a>
+<br>
 <a href="news">Run Algo </a>
 </body>
 
