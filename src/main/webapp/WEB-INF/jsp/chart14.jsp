@@ -104,8 +104,17 @@
 
                 };
 
+                $(document).ready(function() {
 
-                $.getJSON("data?code=[[${code}]]&date=2017-03-01", function(data) {
+                    var year =date.getFullYear()-5;
+                    var mm = (date.getMonth()+1).toString();
+                    var dd  = date.getDate().toString();
+
+                    var url =   "data?code=${code}&date="+year+"-"+ (mm[1]?mm:"0"+mm[0])+"-"+ (dd[1]?dd:"0"+dd[0]);
+                    var link = new URL("../"+url, window.location.href).href;
+                    console.log('xxx urlxxx: '+link);
+
+                $.getJSON(url, function(data) {
                     console.log('xx');
                     //         data.map(function(p) {
                     //             var ymd = p.date.split("-");
@@ -145,6 +154,30 @@
                     chart.xAxis[0].setTitle({ text: "1yrs - day" });
                     chart.redraw();
 
+                    createChart('container4') ;
+                    chart.series.forEach(function(ser) {
+                        console.log('SELECTED -1')
+                        ser.update({
+                            dataGrouping: {
+                                units: [ ['day', [1]] ],
+                                groupPixelWidth: 10
+                            }
+                        }, false);
+                    });
+                    chart.series[1].setVisible(false);
+                    chart.series[2].setVisible(false);
+
+                    chart.xAxis[0].setExtremes(Date.UTC(date.getFullYear() - 2, 1, 1, 16, 00), new Date().getTime());
+                    chart.xAxis[0].setTitle({ text: "2yrs - day" });
+
+                    chart.redraw();
+
+
+
+
+
+
+
                     createChart('container1') ;
                     chart.series.forEach(function(ser) {
                         console.log('SELECTED -1')
@@ -162,6 +195,12 @@
                     chart.xAxis[0].setTitle({ text: "3yrs - month" });
 
                     chart.redraw();
+
+
+
+
+
+
 
                     createChart('container2') ;
                     chart.series.forEach(function(ser) {
@@ -183,6 +222,7 @@
                     chart.redraw();
 
 
+
                     createChart('container3') ;
                     chart.series.forEach(function(ser) {
                         console.log('SELECTED -1')
@@ -202,12 +242,52 @@
 
                     chart.redraw();
 
+                    createChart('container5') ;
+                    chart.series.forEach(function(ser) {
+                        console.log('SELECTED -1')
+                        ser.update({
+                            dataGrouping: {
+                                units: [ ['week', [1]] ],
+                                groupPixelWidth: 10
+                            }
+                        }, false);
+                    });
+                    chart.series[1].setVisible(false);
+                    chart.series[2].setVisible(false);
+
+                    chart.xAxis[0].setExtremes(Date.UTC(date.getFullYear() - 3, 1, 1, 16, 00), new Date().getTime());
+
+                    chart.xAxis[0].setTitle({ text: "3yrs - week" });
+
+                    chart.redraw();
+
+                    createChart('container6') ;
+                    chart.series.forEach(function(ser) {
+                        console.log('SELECTED -1')
+                        ser.update({
+                            dataGrouping: {
+                                units: [ ['month', [1]] ],
+                                groupPixelWidth: 10
+                            }
+                        }, false);
+                    });
+                    chart.series[1].setVisible(false);
+                    chart.series[2].setVisible(false);
+
+                    chart.xAxis[0].setExtremes(Date.UTC(date.getFullYear() - 4, 1, 1, 16, 00), new Date().getTime());
+
+                    chart.xAxis[0].setTitle({ text: "4yrs - month" });
+
+                    chart.redraw();
+
                 });
 
 
 
 
-                $(document).ready(function() {
+
+
+
 
                 });
 
@@ -246,20 +326,32 @@
             <div id="container"  ></div>
         </div>
         <div class="col-md-6" >
-            <div id="container2"  ></div>
+            <div id="container4"  ></div>
         </div>
 
     </div>
     <div class="row">
         <div class="col-md-6" >
+            <div id="container2"  ></div>
+        </div>
+        <div class="col-md-6" >
+            <div id="container5"  ></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6" >
             <div id="container1"  ></div>
         </div>
+        <div class="col-md-6" >
+            <div id="container6"  ></div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-6" >
             <div id="container3"  ></div>
         </div>
     </div>
-
-
 
 </div>
 
