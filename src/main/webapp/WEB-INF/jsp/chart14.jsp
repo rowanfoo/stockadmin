@@ -41,8 +41,8 @@
                     chart = new  Highcharts.StockChart(name, {
 
                         chart: {
-                            width: 400,
-                            height: 300
+                            width: 700,
+                            height: 400
                         },
 
 
